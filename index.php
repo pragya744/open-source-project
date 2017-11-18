@@ -1,145 +1,117 @@
-<!DOCTYPE>
 <?php 
-session_start();
-include("functions/functions.php");
+session_start(); 
+
+if(!isset($_SESSION['user_email'])){
+	
+	echo "<script>window.open('login.php?not_admin=You are not an Admin!','_self')</script>";
+}
+else {
 
 ?>
+
+<!DOCTYPE> 
+
 <html>
 	<head>
-		<title>My Online Shop</title>
-		
+		<title>This is Admin Panel</title> 
 		
 	<link rel="stylesheet" href="styles/style.css" media="all" /> 
 	</head>
-	
-<body>
-	
-	<!--Main Container starts here-->
+
+
+<body> 
+
 	<div class="main_wrapper">
 	
-		<!--Header starts here-->
-		<div class="header_wrapper">
-		
-			<a href="index.php"><img id="logo" src="images/logo.gif" /> </a>
-			<img id="banner" src="images/ad_banner.gif" />
-		</div>
-		<!--Header ends here-->
-		
-		<!--Navigation Bar starts-->
-		<div class="menubar">
-			
-			<ul id="menu">
-				<li><a href="index.php">Home</a></li>
-				<li><a href="all_products.php">All Products</a></li>
-				<li><a href="customer/my_account.php">My Account</a></li>
-				<li><a href="#">Sign Up</a></li>
-				<li><a href="cart.php">Shopping Cart</a></li>
-				<li><a href="#">Contact Us</a></li>
-			
-			</ul>
-			
-			<div id="form">
-				<form method="get" action="results.php" enctype="multipart/form-data">
-					<input type="text" name="user_query" placeholder="Search a Product"/ > 
-					<input type="submit" name="search" value="Search" />
-				</form>
-			
-			</div>
-			
-		</div>
-		<!--Navigation Bar ends-->
 	
-		<!--Content wrapper starts-->
-		<div class="content_wrapper">
+		<div id="header"></div>
 		
-			<div id="sidebar">
+		<div id="right">
+		<h2 style="text-align:center;">Manage Content</h2>
 			
-				<div id="sidebar_title">Categories</div>
-				
-				<ul id="cats">
-				
-				<?php getCats(); ?>
-				
-				<ul>
-					
-				<div id="sidebar_title">Brands</div>
-				
-				<ul id="cats">
-					
-					<?php getBrands(); ?>
-				
-				<ul>
-			
-			
-			</div>
-		
-			<div id="content_area">
-			
-			<?php cart(); ?>
-			
-			<div id="shopping_cart"> 
-					
-					<span style="float:right; font-size:17px; padding:5px; line-height:40px;">
-					
-					<?php 
-					if(isset($_SESSION['customer_email'])){
-					echo "<b>Welcome:</b>" . $_SESSION['customer_email'] . "<b style='color:yellow;'>Your</b>" ;
-					}
-					else {
-					echo "<b>Welcome Guest:</b>";
-					}
-					?>
-					
-					<b style="color:yellow">Shopping Cart -</b> Total Items: <?php total_items();?> Total Price: <?php total_price(); ?> <a href="cart.php" style="color:yellow">Go to Cart</a>
-					
-					
-					<?php 
-					if(!isset($_SESSION['customer_email'])){
-					
-					echo "<a href='checkout.php' style='color:orange;'>Login</a>";
-					
-					}
-					else {
-					echo "<a href='logout.php' style='color:orange;'>Logout</a>";
-					}
-					
-					
-					
-					?>
-					
-					
-					
-					</span>
-			</div>
-			
-				<div id="products_box">
-				
-				<?php getPro(); ?>
-				<?php getCatPro(); ?>
-				<?php getBrandPro(); ?>
-				
-				</div>
-			
-			</div>
-		</div>
-		<!--Content wrapper ends-->
-		
-		
-		
-		<div id="footer">
-		
-		<h2 style="text-align:center; padding-top:30px;">&copy; 2014 by www.OnlineTuting.com</h2>
+			<a href="index.php?insert_product">Insert New Product</a>
+			<a href="index.php?view_products">View All Products</a>
+			<a href="index.php?insert_cat">Insert New Category</a>
+			<a href="index.php?view_cats">View All Categories</a>
+			<a href="index.php?insert_brand">Insert New Brand</a>
+			<a href="index.php?view_brands">View All Brands</a>
+			<a href="index.php?view_customers">View Customers</a>
+			<a href="index.php?view_orders">View Orders</a>
+			<a href="index.php?view_payments">View Payments</a>
+			<a href="logout.php">Admin Logout</a>
 		
 		</div>
-	
-	
-	
-	
-	
-	
-	</div> 
-<!--Main Container ends here-->
+		
+		<div id="left">
+		<h2 style="color:red; text-align:center;"><?php echo @$_GET['logged_in']; ?></h2>
+		<?php 
+		if(isset($_GET['insert_product'])){
+		
+		include("insert_product.php"); 
+		
+		}
+		if(isset($_GET['view_products'])){
+		
+		include("view_products.php"); 
+		
+		}
+		if(isset($_GET['edit_pro'])){
+		
+		include("edit_pro.php"); 
+		
+		}
+		if(isset($_GET['insert_cat'])){
+		
+		include("insert_cat.php"); 
+		
+		}
+		
+		if(isset($_GET['view_cats'])){
+		
+		include("view_cats.php"); 
+		
+		}
+		
+		if(isset($_GET['edit_cat'])){
+		
+		include("edit_cat.php"); 
+		
+		}
+		
+		if(isset($_GET['insert_brand'])){
+		
+		include("insert_brand.php"); 
+		
+		}
+		
+		if(isset($_GET['view_brands'])){
+		
+		include("view_brands.php"); 
+		
+		}
+		if(isset($_GET['edit_brand'])){
+		
+		include("edit_brand.php"); 
+		
+		}
+		if(isset($_GET['view_customers'])){
+		
+		include("view_customers.php"); 
+		
+		}
+		
+		?>
+		</div>
+
+
+
+
+
+
+	</div>
 
 
 </body>
 </html>
+
+<?php } ?>
